@@ -118,6 +118,13 @@ function decYToSeason(dy) {
 /* ===== DATA UTILITIES ===== */
 
 // PLAYERS から現在のクラブに関係する選手を抽出して在籍情報を付加
+// クラブ名の一致判定（正式名 + teamAliases の別名に対応）
+function matchesTeam(teamStr, ds) {
+  if (teamStr === ds.team) return true;
+  if (ds.teamAliases && ds.teamAliases.includes(teamStr)) return true;
+  return false;
+}
+
 function getPlayersForDataset(ds) {
   // 名前ベースで重複除去（複数クラブファイル読み込み時の対策）
   const seen = new Set();
@@ -129,7 +136,7 @@ function getPlayersForDataset(ds) {
 
   return uniquePlayers
     .filter(p => p.careers.some(c => {
-      if (c.team !== ds.team) return false;
+      if (!matchesTeam(c.team, ds)) return false;
       // AXIS_START より前に退団済みの場合は表示対象外
       const endDecY = c.end ? toDecY(c.end) : AXIS_END;
       return endDecY > AXIS_START;
@@ -139,12 +146,12 @@ function getPlayersForDataset(ds) {
       position: p.position || p.cat || '?',   // cat → position に統一
       // このクラブへの在籍エントリ（loan_in 含む・表示範囲内のみ）
       stints:   p.careers.filter(c => {
-        if (c.team !== ds.team) return false;
+        if (!matchesTeam(c.team, ds)) return false;
         const endDecY = c.end ? toDecY(c.end) : AXIS_END;
         return endDecY > AXIS_START;
       }),
       // loan_out 候補: 他クラブへの loan エントリ（在籍中のギャップ検出に使用）
-      loanOuts: p.careers.filter(c => c.team !== ds.team && c.loan === true),
+      loanOuts: p.careers.filter(c => !matchesTeam(c.team, ds) && c.loan === true),
     }));
 }
 
@@ -475,7 +482,7 @@ function buildChart() {
       if (sortMode === 'tenure') {
         // 現クラブへの最初の移籍日（最も古い在籍開始日）で昇順ソート
         const firstStint = p => p.careers
-          .filter(c => c.team === ds.team)
+          .filter(c => matchesTeam(c.team, ds))
           .map(c => toDecY(c.start || '1970-01'))
           .reduce((mn, v) => Math.min(mn, v), Infinity);
         return firstStint(a) - firstStint(b);

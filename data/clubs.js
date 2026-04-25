@@ -3,11 +3,12 @@
    ================================================================
 
    ■ 各 DATASETS エントリのフィールド
-     name       : 表示名（サイドバー・タイトルに使用）
-     team       : PLAYERS.careers[].team と照合する文字列（完全一致）
-     period     : 対象期間の表示用文字列
-     categories : ポジション → カラーコードのマップ
-     events     : 月単位のイベント { year, month, name }
+     name         : 表示名（サイドバー・タイトルに使用）
+     team         : PLAYERS.careers[].team と照合する文字列（正式名称・完全一致）
+     teamAliases  : team の別名配列（他クラブスクレイパーが短縮名で記録した場合に対応）
+     period       : 対象期間の表示用文字列
+     categories   : ポジション → カラーコードのマップ
+     events       : 月単位のイベント { year, month, name }
 
    ■ 選手データは player.js の PLAYERS 配列から自動抽出される
      （このファイルに選手を直接書く必要はない）
@@ -19,7 +20,8 @@
 // ────────────────────────────────────────────────
 DATASETS.real_madrid = {
   name:   "レアル・マドリードCF",
-  team:   "レアル・マドリードCF",   // player.js の careers[].team と照合
+  team:         "レアル・マドリードCF",
+  teamAliases:  ["レアル・マドリード", "レアルマドリード", "Real Madrid"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -66,7 +68,8 @@ DATASETS.real_madrid = {
 // ────────────────────────────────────────────────
 DATASETS.barcelona = {
   name:   "FCバルセロナ",
-  team:   "FCバルセロナ",   // player.js の careers[].team と照合
+  team:         "FCバルセロナ",
+  teamAliases:  ["バルセロナ", "Barcelona", "FC Barcelona"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -112,7 +115,8 @@ DATASETS.barcelona = {
 // ────────────────────────────────────────────────
 DATASETS.psg = {
   name:   "パリ・サンジェルマン",
-  team:   "パリ・サンジェルマン",   // player.js の careers[].team と照合
+  team:         "パリ・サンジェルマン",
+  teamAliases:  ["パリサンジェルマン", "PSG", "Paris Saint-Germain"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -154,7 +158,8 @@ DATASETS.psg = {
 // ────────────────────────────────────────────────
 DATASETS.fiorentina = {
   name:   "ACFフィオレンティーナ",
-  team:   "ACFフィオレンティーナ",   // players_fiorentina.js の careers[].team と照合
+  team:         "ACFフィオレンティーナ",
+  teamAliases:  ["フィオレンティーナ", "Fiorentina"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -186,9 +191,10 @@ DATASETS.fiorentina = {
 // ACミラン
 // ────────────────────────────────────────────────
 DATASETS.ac_milan = {
-  name:   "ACミラン",
-  team:   "ACミラン",
-  period: "2000/01〜2025/26",
+  name:         "ACミラン",
+  team:         "ACミラン",
+  teamAliases:  ["ミラン", "AC Milan", "Milan"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -223,8 +229,9 @@ DATASETS.ac_milan = {
 // インテルナツィオナーレ・ミラノ
 // ────────────────────────────────────────────────
 DATASETS.inter = {
-  name:   "インテルナツィオナーレ・ミラノ",
-  team:   "インテルナツィオナーレ・ミラノ",
+  name:         "インテルナツィオナーレ・ミラノ",
+  team:         "インテルナツィオナーレ・ミラノ",
+  teamAliases:  ["インテル", "インテルナツィオナーレ", "インテル・ミラノ", "Inter Milan"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -262,7 +269,8 @@ DATASETS.inter = {
 // ────────────────────────────────────────────────
 DATASETS.juventus = {
   name:   "ユヴェントスFC",
-  team:   "ユヴェントスFC",   // player.js の careers[].team と照合
+  team:         "ユヴェントスFC",
+  teamAliases:  ["ユヴェントス", "ユベントス", "Juventus"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -304,9 +312,10 @@ DATASETS.juventus = {
 // SSCナポリ
 // ────────────────────────────────────────────────
 DATASETS.napoli = {
-  name:   "SSCナポリ",
-  team:   "SSCナポリ",
-  period: "2000/01〜2025/26",
+  name:         "SSCナポリ",
+  team:         "SSCナポリ",
+  teamAliases:  ["ナポリ", "Napoli", "SSC Napoli"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -334,9 +343,10 @@ DATASETS.napoli = {
 // ASローマ
 // ────────────────────────────────────────────────
 DATASETS.roma = {
-  name:   "ASローマ",
-  team:   "ASローマ",
-  period: "2000/01〜2025/26",
+  name:         "ASローマ",
+  team:         "ASローマ",
+  teamAliases:  ["ローマ", "AS Roma", "Roma"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -370,9 +380,10 @@ DATASETS.roma = {
 // アタランタBC
 // ────────────────────────────────────────────────
 DATASETS.atalanta = {
-  name:   "アタランタBC",
-  team:   "アタランタBC",
-  period: "2000/01〜2025/26",
+  name:         "アタランタBC",
+  team:         "アタランタBC",
+  teamAliases:  ["アタランタ", "Atalanta", "Atalanta BC"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -400,9 +411,10 @@ DATASETS.atalanta = {
 // チェルシーFC
 // ────────────────────────────────────────────────
 DATASETS.chelsea = {
-  name:   "チェルシーFC",
-  team:   "チェルシーFC",
-  period: "2000/01〜2025/26",
+  name:         "チェルシーFC",
+  team:         "チェルシーFC",
+  teamAliases:  ["チェルシー", "Chelsea", "Chelsea FC"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -440,8 +452,9 @@ DATASETS.chelsea = {
 // ────────────────────────────────────────────────
 DATASETS.bayern = {
   name:   "FCバイエルン・ミュンヘン",
-  team:   "FCバイエルン・ミュンヘン",
-  period: "2000/01〜2025/26",
+  team:         "FCバイエルン・ミュンヘン",
+  teamAliases:  ["バイエルン", "バイエルン・ミュンヘン", "Bayern", "Bayern Munich", "FC Bayern"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -491,9 +504,10 @@ DATASETS.bayern = {
 // ボルシア・ドルトムント
 // ────────────────────────────────────────────────
 DATASETS.dortmund = {
-  name:   "ボルシア・ドルトムント",
-  team:   "ボルシア・ドルトムント",
-  period: "2000/01〜2025/26",
+  name:         "ボルシア・ドルトムント",
+  team:         "ボルシア・ドルトムント",
+  teamAliases:  ["ドルトムント", "BVB", "Borussia Dortmund"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -527,8 +541,9 @@ DATASETS.dortmund = {
 // FC町田ゼルビア
 // ────────────────────────────────────────────────
 DATASETS.machida = {
-  name:   "FC町田ゼルビア",
-  team:   "FC町田ゼルビア",
+  name:         "FC町田ゼルビア",
+  team:         "FC町田ゼルビア",
+  teamAliases:  ["町田ゼルビア", "町田"],
   period: "2000/01〜2025/26",
 
   categories: {
@@ -550,8 +565,9 @@ DATASETS.machida = {
 // ────────────────────────────────────────────────
 DATASETS.kawasaki = {
   name:   "川崎フロンターレ",
-  team:   "川崎フロンターレ",
-  period: "2000/01〜2025/26",
+  team:         "川崎フロンターレ",
+  teamAliases:  ["川崎", "Kawasaki Frontale"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
@@ -575,9 +591,10 @@ DATASETS.kawasaki = {
 // FC東京
 // ────────────────────────────────────────────────
 DATASETS.fctokyo = {
-  name:   "FC東京",
-  team:   "FC東京",
-  period: "2000/01〜2025/26",
+  name:         "FC東京",
+  team:         "FC東京",
+  teamAliases:  ["東京", "FC Tokyo"],
+  period:       "2000/01〜2025/26",
 
   categories: {
     '監督': '#c0392b',
