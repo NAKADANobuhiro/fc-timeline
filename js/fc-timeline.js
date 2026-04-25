@@ -25,7 +25,7 @@ const CAT_ORDER   = ['監督', 'GK', 'DF', 'MF', 'FW'];
 function cv(name) {
   return getComputedStyle(document.body).getPropertyValue(name).trim();
 }
-let currentTheme = localStorage.getItem('fctl-theme') || 'dark';
+let currentTheme = localStorage.getItem('fctl-theme') || 'light';
 
 function applyTheme(theme) {
   currentTheme = theme;
@@ -217,7 +217,7 @@ let evHitItems  = [];
 let selectedDecY = null;  // 選択中の小数年（null = 未選択）
 
 /* ===== VIEW RANGE ===== */
-let viewMode = 'recent';                        // 'recent' | 'full'
+let viewMode = 'full';                          // 'recent' | 'full'
 const VIEW_RECENT_START = 2015 + 7 / 12;        // 2015年8月
 
 /* ===== HAMBURGER MENU ===== */
