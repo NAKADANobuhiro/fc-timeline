@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fc-timeline</title>
+  <link rel="stylesheet" href="css/fc-timeline.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ── Sidebar ── -->
+  <div id="sidebar">
+    <div id="sidebar-inner">
+      <h1>
+        <span class="h1-text">fc-timeline<span>Club Player Timeline</span></span>
+        <button id="toggle-btn" onclick="toggleSidebar()" title="閉じる">◀</button>
+      </h1>
+      <div class="era-list" id="era-list"></div>
+      <div class="filter-section" id="filters"></div>
+    </div>
+  </div>
+
+  <!-- ── Main ── -->
+  <div id="main">
+
+    <!-- Toolbar -->
+    <div id="toolbar">
+      <button id="expand-btn" onclick="toggleSidebar()" title="サイドバーを開く" style="display:none">▶</button>
+      <span class="t-title" id="t-title">読み込み中…</span>
+      <div class="legend" id="legend"></div>
+      <span id="zoom-info">100%</span>
+      <!-- Sort -->
+      <div class="seg-ctrl">
+        <button class="seg-btn"            id="sort-birth"  onclick="setSort('birth')">生年順</button>
+        <button class="seg-btn seg-active" id="sort-cat"    onclick="setSort('cat')">ポジション別</button>
+        <button class="seg-btn"            id="sort-tenure" onclick="setSort('tenure')">在籍順</button>
+      </div>
+      <button class="tbtn" onclick="zoomOut()">－ 縮小</button>
+      <button class="tbtn" onclick="zoomIn()">＋ 拡大</button>
+      <button class="tbtn" onclick="resetZoom()">リセット</button>
+      <!-- Hamburger -->
+      <button id="hamburger-btn" onclick="toggleMenu(event)" title="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+      <!-- Dropdown -->
+      <div id="hamburger-menu" class="hidden">
+        <div class="theme-toggle" onclick="toggleTheme()">
+          <span class="hm-icon" id="theme-icon">🌙</span>
+          <span class="hm-label" id="theme-label">ライトモードに切替</span>
+          <div class="pill"></div>
+        </div>
+        <div class="hmenu-sep"></div>
+        <div class="hmenu-item" onclick="zoomIn(); closeMenu()">
+          <span class="hm-icon">🔍</span><span class="hm-label">拡大</span>
+          <span class="hm-badge">+</span>
+        </div>
+        <div class="hmenu-item" onclick="zoomOut(); closeMenu()">
+          <span class="hm-icon">🔎</span><span class="hm-label">縮小</span>
+          <span class="hm-badge">-</span>
+        </div>
+        <div class="hmenu-item" onclick="resetZoom(); closeMenu()">
+          <span class="hm-icon">↺</span><span class="hm-label">ズームリセット</span>
+          <span class="hm-badge">0</span>
+        </div>
+        <div class="hmenu-sep"></div>
+        <div class="hmenu-item" onclick="setSort('birth'); closeMenu()">
+          <span class="hm-icon">📅</span><span class="hm-label">生年順</span>
+        </div>
+        <div class="hmenu-item" onclick="setSort('cat'); closeMenu()">
+          <span class="hm-icon">🏷️</span><span class="hm-label">ポジション別</span>
+        </div>
+        <div class="hmenu-item" onclick="setSort('tenure'); closeMenu()">
+          <span class="hm-icon">📋</span><span class="hm-label">在籍順</span>
+        </div>
+        <div class="hmenu-sep"></div>
+        <div class="hmenu-item hmenu-active" id="view-recent" onclick="setViewMode('recent')">
+          <span class="hm-icon">📆</span><span class="hm-label">直近（2015/8〜）</span>
+        </div>
+        <div class="hmenu-item" id="view-full" onclick="setViewMode('full')">
+          <span class="hm-icon">🗓️</span><span class="hm-label">全期間（2000〜）</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart row (chart + age panel) -->
+    <div id="chart-row">
+      <div id="chart-wrap"></div>
+      <div id="age-panel">
+        <div id="age-panel-head">
+          <div id="age-panel-year"></div>
+          <button id="age-panel-close" onclick="closeAgePanel()">✕</button>
+        </div>
+        <div id="age-panel-subtitle">在籍選手・スタッフ</div>
+        <div id="age-panel-list"></div>
+      </div>
+    </div>
+
+  </div><!-- /#main -->
+
+</div><!-- /#app -->
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<!-- 読み込み順: data.js → players_*.js → clubs.js → engine -->
+<script src="js/data.js"></script>
+<script src="data/players_juventus.js"></script>
+<script src="data/players_real_madrid.js"></script>
+<script src="data/players_fiorentina.js"></script>
+<script src="data/players_barcelona.js"></script>
+<script src="data/players_psg.js"></script>
+<script src="data/players_ac_milan.js"></script>
+<script src="data/players_inter.js"></script>
+<script src="data/players_napoli.js"></script>
+<script src="data/players_roma.js"></script>
+<script src="data/players_atalanta.js"></script>
+<script src="data/players_chelsea.js"></script>
+<script src="data/players_bayern.js"></script>
+<script src="data/players_dortmund.js"></script>
+<script src="data/players_machida.js"></script>
+<script src="data/players_kawasaki.js"></script>
+<script src="data/players_fctokyo.js"></script>
+<script src="data/managers.js"></script>
+<script src="data/clubs.js"></script>
+<script src="js/fc-timeline.js"></script>
+</body>
+</html>
