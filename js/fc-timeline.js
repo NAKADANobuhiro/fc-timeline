@@ -126,13 +126,30 @@ function matchesTeam(teamStr, ds) {
 }
 
 function getPlayersForDataset(ds) {
-  // 名前ベースで重複除去（複数クラブファイル読み込み時の対策）
-  const seen = new Set();
-  const uniquePlayers = PLAYERS.filter(p => {
-    if (seen.has(p.name)) return false;
-    seen.add(p.name);
-    return true;
-  });
+  // 「名前＋カテゴリ」の組み合わせでマージ。
+  // 同一人物でも「選手（MF等）」と「監督」は別エントリとして共存させる
+  // （例: ピルロ = ACミランでMF + ユヴェントスで監督）。
+  // 同じ名前・同じcatが複数クラブブロックに存在する場合（例: アンチェロッティが
+  // ユヴェントスとACミランの両方の監督ブロックに登録）は careers をマージして1エントリに統合。
+  const byKey = new Map();
+  for (const p of PLAYERS) {
+    const key = `${p.name}|${p.cat}`;
+    if (!byKey.has(key)) {
+      // 最初の出現: careers のコピーを持つ新エントリを作成
+      byKey.set(key, { ...p, careers: [...p.careers] });
+    } else {
+      // 2回目以降: careers をマージ（重複 start は除外）
+      const existing = byKey.get(key);
+      const existingStarts = new Set(existing.careers.map(c => c.start));
+      for (const c of p.careers) {
+        if (!existingStarts.has(c.start)) {
+          existing.careers.push(c);
+          existingStarts.add(c.start);
+        }
+      }
+    }
+  }
+  const uniquePlayers = [...byKey.values()];
 
   return uniquePlayers
     .filter(p => p.careers.some(c => {
@@ -490,6 +507,12 @@ function buildChart() {
       if (sortMode === 'cat') {
         const cd = catIndex(a.position) - catIndex(b.position);
         if (cd !== 0) return cd;
+        // 第二キー: 現クラブへの最初の在籍開始日で昇順
+        const firstStint = p => p.careers
+          .filter(c => matchesTeam(c.team, ds))
+          .map(c => toDecY(c.start || '1970-01'))
+          .reduce((mn, v) => Math.min(mn, v), Infinity);
+        return firstStint(a) - firstStint(b);
       }
       // 生年月でセカンダリソート
       return toDecY(a.birth || '1970-01') - toDecY(b.birth || '1970-01');
