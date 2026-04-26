@@ -160,6 +160,7 @@ body {
   transition: all 0.12s; white-space: nowrap;
 }
 .tbtn:hover { background: var(--card-hover); color: var(--text); }
+.tbtn-active { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
 
 .seg-ctrl {
   display: flex; border: 1px solid var(--border-lite);

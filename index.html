@@ -15,7 +15,7 @@
   <div id="sidebar">
     <div id="sidebar-inner">
       <h1>
-        <span class="h1-text">fc-timeline<span>Club Player Timeline</span></span>
+        <span class="h1-text">fc-timeline<span>Football Club Player Timeline</span></span>
         <button id="toggle-btn" onclick="toggleSidebar()" title="閉じる">◀</button>
       </h1>
       <div class="era-list" id="era-list"></div>
@@ -40,6 +40,7 @@
       </div>
       <button class="tbtn" onclick="zoomOut()">－ 縮小</button>
       <button class="tbtn" onclick="zoomIn()">＋ 拡大</button>
+      <button class="tbtn" id="focus-btn" onclick="toggleFocus()" title="スペースキーを押し続けている間だけ、フォーカスモードになります。">フォーカス</button>
       <button class="tbtn" onclick="resetZoom()">リセット</button>
       <!-- Hamburger -->
       <button id="hamburger-btn" onclick="toggleMenu(event)" title="メニュー">

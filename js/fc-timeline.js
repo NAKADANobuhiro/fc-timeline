@@ -230,6 +230,7 @@ let currentKey   = '';
 let visibleCats  = {};
 let curPlayers   = [];
 let spacePressed = false;  // スペースキー押下中フラグ（在籍絞り込みモード）
+let focusMode    = false;  // フォーカスボタン トグル（在籍絞り込みモード）
 let curT        = d3.zoomIdentity;
 let sortMode    = 'cat';   // 'birth' | 'cat' | 'tenure'
 let kXExtra     = 1.0;
@@ -332,7 +333,8 @@ function selectDecY(decY) {
   document.getElementById('age-panel').classList.add('open');
   renderAgePanel();
   redrawFixed();
-  if (!wasOpen) setTimeout(buildChart, 260);
+  // フォーカスモード中は日付変化のたびに再描画して絞り込みを更新する
+  if (!wasOpen || focusMode) setTimeout(buildChart, focusMode ? 0 : 260);
 }
 
 // パネルを閉じる（selectedDecY は保持 → チャートクリックで再表示可能）
@@ -520,8 +522,8 @@ function buildChart() {
       return toDecY(a.birth || '1970-01') - toDecY(b.birth || '1970-01');
     });
 
-  // スペースキー押下中：選択月に在籍している選手だけを絞り込み表示
-  if (spacePressed && selectedDecY !== null) {
+  // スペースキー押下中 or フォーカスモード：選択月に在籍している選手だけを絞り込み表示
+  if ((spacePressed || focusMode) && selectedDecY !== null) {
     curPlayers = curPlayers.filter(p =>
       p.stints.some(s => {
         const ss = toDecY(s.start);
@@ -1185,6 +1187,13 @@ function resetZoom() {
   applyViewMode();
 }
 
+function toggleFocus() {
+  focusMode = !focusMode;
+  const btn = document.getElementById('focus-btn');
+  if (btn) btn.classList.toggle('tbtn-active', focusMode);
+  buildChart();
+}
+
 function setSort(mode) {
   sortMode = mode;
   document.getElementById('sort-birth').classList.toggle('seg-active', mode === 'birth');
@@ -1198,9 +1207,10 @@ function setSort(mode) {
    ========================================================= */
 document.addEventListener('keydown', e => {
   if (e.target.matches('input, textarea')) return;
-  // スペースキー → 選択月の在籍選手のみ表示（押している間）
+  // スペースキー → 選択月の在籍選手のみ表示（押している間）/ フォーカスモード中はトグル
   if (e.key === ' ') {
     e.preventDefault();
+    if (focusMode) { toggleFocus(); return; }
     if (!spacePressed) { spacePressed = true; buildChart(); }
     return;
   }
@@ -1236,7 +1246,7 @@ document.addEventListener('keydown', e => {
 
 document.addEventListener('keyup', e => {
   if (e.target.matches('input, textarea')) return;
-  if (e.key === ' ') { spacePressed = false; buildChart(); }
+  if (e.key === ' ' && !focusMode) { spacePressed = false; buildChart(); }
 });
 
 window.addEventListener('resize', buildChart);
