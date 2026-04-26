@@ -97,9 +97,14 @@ body {
 .era-item {
   padding: 6px 9px; margin: 1px 0; border-radius: 6px; cursor: pointer;
   transition: all 0.15s; border: 1px solid transparent;
+  display: flex; align-items: center; gap: 8px;
 }
 .era-item:hover  { background: var(--card); }
 .era-item.active { background: var(--card); border-color: var(--accent); }
+.era-item .era-emblem {
+  width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;
+}
+.era-item .era-emblem.hidden { display: none; }
 .era-item .era-name   { font-size: 12px; font-weight: 600; white-space: nowrap; }
 .era-item .era-period { font-size: 10px; color: var(--text-muted); }
 

@@ -265,8 +265,10 @@ function renderSidebar() {
     const el = document.createElement('div');
     el.className = 'era-item' + (key === currentKey ? ' active' : '');
     el.innerHTML =
-      `<div class="era-name">${d.name}</div>` +
-      `<div class="era-period">${d.period || ''}</div>`;
+      `<img class="era-emblem" src="image/${key}.svg"` +
+        ` onerror="this.src='image/${key}.png'; this.onerror=function(){this.classList.add('hidden');};"` +
+        ` alt="${d.name}">` +
+      `<div class="era-name">${d.name}</div>`;
     el.onclick = () => { visibleCats = {}; loadDataset(key); };
     list.appendChild(el);
   });
