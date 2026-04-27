@@ -40,6 +40,30 @@ function applyTheme(theme) {
 function toggleTheme() { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
 
 /* ===== TOOLTIP HELPER ===== */
+// 左側選手名ホバー用：現在のクラブ以外の全キャリアを表示
+function buildCareerTooltipHTML(p, ds) {
+  const color   = ds.categories[p.position] || ds.categories[normalizePos(p.position)] || '#888';
+  const normPos = normalizePos(p.position);
+  let html = `<div class="tt-name">${p.name}</div>`;
+  if (p.nat) html += `<div class="tt-nat">${p.nat}</div>`;
+  html += `<div class="tt-pos" style="color:${color};font-weight:700">${normPos}</div>`;
+  if (p.birth) {
+    const bParts = p.birth.split('-');
+    html += `<div class="tt-birth">生年月日: ${bParts[0]}年${Number(bParts[1])}月</div>`;
+  }
+  (p.careers || []).forEach(c => {
+    const isCurrent = matchesTeam(c.team, ds);
+    const endStr    = c.end ? fmtYM(c.end) : '現在';
+    const loanStr   = c.loan ? ' <span class="tt-loan-badge">レンタル</span>' : '';
+    if (isCurrent) {
+      html += `<div class="tt-period-current">${c.team}: ${fmtYM(c.start)} 〜 ${endStr}${loanStr}</div>`;
+    } else {
+      html += `<div class="tt-period">${c.team}: ${fmtYM(c.start)} 〜 ${endStr}${loanStr}</div>`;
+    }
+  });
+  return html;
+}
+
 function buildPlayerTooltipHTML(p, ds) {
   const color   = ds.categories[p.position] || ds.categories[normalizePos(p.position)] || '#888';
   const normPos = normalizePos(p.position);
@@ -883,7 +907,7 @@ function drawNamesPanel() {
       .attr('fill', 'transparent')
       .attr('cursor', 'default')
       .on('mouseover', function(event) {
-        showTooltip(buildPlayerTooltipHTML(p, ds), event.clientX, event.clientY);
+        showTooltip(buildCareerTooltipHTML(p, ds), event.clientX, event.clientY);
       })
       .on('mousemove', function(event) {
         posTooltip(event.clientX, event.clientY);
