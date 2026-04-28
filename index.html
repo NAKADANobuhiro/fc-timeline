@@ -78,6 +78,11 @@
           <span class="hm-icon">📋</span><span class="hm-label">在籍順</span>
         </div>
         <div class="hmenu-sep"></div>
+        <div class="hmenu-item" onclick="openHelpModal(); closeMenu()">
+          <span class="hm-icon">❓</span><span class="hm-label">ヘルプ</span>
+          <span class="hm-badge">H</span>
+        </div>
+        <div class="hmenu-sep"></div>
         <div class="hmenu-item" id="view-recent" onclick="setViewMode('recent')">
           <span class="hm-icon">📆</span><span class="hm-label">直近（2015/8〜）</span>
         </div>
@@ -106,6 +111,20 @@
 
 <!-- Tooltip -->
 <div id="tooltip"></div>
+
+<!-- Help modal -->
+<div class="modal-bg hidden" id="modal-bg" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <h2>❓ ヘルプ</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="tbtn" onclick="closeModal()">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <!-- 読み込み順: data.js → players_*.js → clubs.js → engine -->
 <script src="js/data.js"></script>

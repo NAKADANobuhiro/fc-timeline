@@ -1227,6 +1227,56 @@ function setSort(mode) {
 }
 
 /* =========================================================
+   HELP MODAL
+   ========================================================= */
+function openHelpModal() {
+  document.getElementById('modal-body').innerHTML = `
+    <div class="help-modal">
+      <div class="help-section">
+        <div class="help-section-title">🖱️ マウス操作</div>
+        <table class="help-table">
+          <tr><td>ホイール</td><td>縦スクロール</td></tr>
+          <tr><td>Ctrl + ホイール</td><td>横軸ズーム</td></tr>
+          <tr><td>ピンチ</td><td>横軸ズーム</td></tr>
+          <tr><td>チャートをクリック</td><td>その月を選択・在籍パネルを開く</td></tr>
+          <tr><td>バーにホバー</td><td>在籍期間・背番号を表示</td></tr>
+          <tr><td>選手名にホバー</td><td>他クラブのキャリアを表示</td></tr>
+        </table>
+      </div>
+      <div class="help-section">
+        <div class="help-section-title">⌨️ キーボードショートカット</div>
+        <table class="help-table">
+          <tr><td><kbd>+</kbd> / <kbd>=</kbd></td><td>横軸を拡大</td></tr>
+          <tr><td><kbd>-</kbd></td><td>横軸を縮小</td></tr>
+          <tr><td><kbd>0</kbd></td><td>ズームリセット</td></tr>
+          <tr><td><kbd>Shift</kbd> + <kbd>→</kbd> / <kbd>←</kbd></td><td>横軸を拡大 / 縮小</td></tr>
+          <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>選択月を1ヶ月移動</td></tr>
+          <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>縦スクロール（3行分）</td></tr>
+          <tr><td><kbd>Space</kbd></td><td>押している間、選択月の在籍選手のみ表示</td></tr>
+          <tr><td><kbd>H</kbd></td><td>このヘルプを表示</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>パネル・モーダルを閉じる</td></tr>
+        </table>
+      </div>
+      <div class="help-section">
+        <div class="help-section-title">🏟️ クラブ・表示設定</div>
+        <table class="help-table">
+          <tr><td>左サイドバー</td><td>クラブを切り替え</td></tr>
+          <tr><td>ポジションフィルター</td><td>サイドバーのチェックボックスで絞り込み</td></tr>
+          <tr><td>ソート切替</td><td>ツールバーの「生年順 / ポジション別 / 在籍順」</td></tr>
+          <tr><td>ビュー切替</td><td>ハンバーガーメニューの「直近 / 全期間」</td></tr>
+          <tr><td>フォーカス</td><td>ツールバーボタンで選択月の在籍選手のみ表示をトグル</td></tr>
+          <tr><td>テーマ切替</td><td>ハンバーガーメニューのライト / ダーク</td></tr>
+        </table>
+      </div>
+    </div>`;
+  document.getElementById('modal-bg').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.add('hidden');
+}
+
+/* =========================================================
    KEYBOARD SHORTCUTS
    ========================================================= */
 document.addEventListener('keydown', e => {
@@ -1241,7 +1291,12 @@ document.addEventListener('keydown', e => {
   if (e.key === '+' || e.key === '=') zoomIn();
   if (e.key === '-') zoomOut();
   if (e.key === '0') resetZoom();
-  if (e.key === 'Escape') { closeAgePanel(); return; }
+  if (e.key === 'h' || e.key === 'H') { openHelpModal(); return; }
+  if (e.key === 'Escape') {
+    if (!document.getElementById('modal-bg').classList.contains('hidden')) { closeModal(); return; }
+    closeAgePanel();
+    return;
+  }
   // Shift+Arrow → 水平ズーム
   if (e.key === 'ArrowRight' && e.shiftKey) { zoomXBy(1.2, NAME_W + curChartW / 2); return; }
   if (e.key === 'ArrowLeft'  && e.shiftKey) { zoomXBy(1 / 1.2, NAME_W + curChartW / 2); return; }
