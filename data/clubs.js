@@ -588,6 +588,80 @@ DATASETS.kawasaki = {
 };
 
 // ────────────────────────────────────────────────
+// アーセナルFC
+// ────────────────────────────────────────────────
+DATASETS.arsenal = {
+  name:         "アーセナルFC",
+  team:         "アーセナルFC",
+  teamAliases:  ["アーセナル", "Arsenal", "Arsenal FC"],
+  period:       "2000/01〜2025/26",
+
+  categories: {
+    '監督': '#c0392b',
+    'FW':  '#e67e22',
+    'MF':  '#27ae60',
+    'DF':  '#2471a3',
+    'GK':  '#6c3483',
+  },
+
+  events: [
+    // ── W杯 ──
+    { year: 2002, month:  6, name: '日韓W杯' },
+    { year: 2006, month:  7, name: 'ドイツW杯' },
+    { year: 2010, month:  7, name: 'S.アフリカW杯' },
+    { year: 2014, month:  7, name: 'ブラジルW杯' },
+    { year: 2018, month:  7, name: 'ロシアW杯' },
+    { year: 2022, month: 11, name: 'カタールW杯' },
+
+    // ── プレミアリーグ優勝 ──
+    { year: 2002, month:  5, name: 'PL優勝' },
+    { year: 2004, month:  4, name: 'PL優勝（無敗）' }, // The Invincibles
+
+    // ── FAカップ優勝 ──
+    { year: 2003, month:  5, name: 'FA杯優勝' },
+    { year: 2005, month:  5, name: 'FA杯優勝' },
+    { year: 2014, month:  5, name: 'FA杯優勝' },
+    { year: 2015, month:  5, name: 'FA杯優勝' },
+    { year: 2017, month:  5, name: 'FA杯優勝' },
+    { year: 2020, month:  8, name: 'FA杯優勝' },
+  ],
+};
+
+// ────────────────────────────────────────────────
+// トッテナム・ホットスパーFC
+// ────────────────────────────────────────────────
+DATASETS.tottenham = {
+  name:         "トッテナム・ホットスパーFC",
+  team:         "トッテナム・ホットスパーFC",
+  teamAliases:  ["トッテナム・ホットスパー", "トッテナム", "Tottenham", "Tottenham Hotspur", "Spurs"],
+  period:       "2000/01〜2025/26",
+
+  categories: {
+    '監督': '#c0392b',
+    'FW':  '#e67e22',
+    'MF':  '#27ae60',
+    'DF':  '#2471a3',
+    'GK':  '#6c3483',
+  },
+
+  events: [
+    // ── W杯 ──
+    { year: 2002, month:  6, name: '日韓W杯' },
+    { year: 2006, month:  7, name: 'ドイツW杯' },
+    { year: 2010, month:  7, name: 'S.アフリカW杯' },
+    { year: 2014, month:  7, name: 'ブラジルW杯' },
+    { year: 2018, month:  7, name: 'ロシアW杯' },
+    { year: 2022, month: 11, name: 'カタールW杯' },
+
+    // ── CLファイナル ──
+    { year: 2019, month:  6, name: 'CL決勝' },
+
+    // ── リーグカップ優勝 ──
+    { year: 2008, month:  2, name: 'リーグ杯優勝' },
+  ],
+};
+
+// ────────────────────────────────────────────────
 // FC東京
 // ────────────────────────────────────────────────
 DATASETS.fctokyo = {
