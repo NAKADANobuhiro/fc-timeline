@@ -285,8 +285,17 @@ document.addEventListener('click', e => {
 function renderSidebar() {
   const list = document.getElementById('era-list');
   list.innerHTML = '';
+  let lastLeague = null;
   Object.keys(DATASETS).forEach(key => {
     const d  = DATASETS[key];
+    // リーグラベル（league プロパティがあれば）
+    if (d.league && d.league !== lastLeague) {
+      lastLeague = d.league;
+      const lbl = document.createElement('div');
+      lbl.className = 'era-league-label';
+      lbl.textContent = d.league;
+      list.appendChild(lbl);
+    }
     const el = document.createElement('div');
     el.className = 'era-item' + (key === currentKey ? ' active' : '');
     el.innerHTML =
