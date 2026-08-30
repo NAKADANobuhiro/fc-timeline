@@ -271,6 +271,21 @@ body.light .pill::after { left: 19px; }
 }
 #age-panel-list { flex: 1; overflow-y: auto; padding: 2px 0; }
 
+/* 在籍パネル上部のイベント欄 */
+.age-ev-sec {
+  margin: 4px 8px 6px;
+  background: color-mix(in srgb, var(--chart-ev-line) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--chart-ev-line) 35%, transparent);
+  border-radius: 6px;
+  padding: 4px 2px;
+}
+.age-ev-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 8px; font-size: 12px;
+}
+.age-ev-icon { font-size: 10px; flex-shrink: 0; opacity: 0.8; }
+.age-ev-name { color: var(--chart-ev-text); font-weight: 600; line-height: 1.3; }
+
 .age-cat-head {
   font-size: 9px; color: var(--text-muted); font-weight: 600;
   padding: 6px 10px 2px; letter-spacing: 0.5px;

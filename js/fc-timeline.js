@@ -422,9 +422,29 @@ function renderAgePanel() {
   const list = document.getElementById('age-panel-list');
   list.innerHTML = '';
 
+  /* 選択月に起きたイベント（±半月のトレランス） */
+  const evTol  = 1 / 24;
+  const evHere = (ds.events || []).filter(ev =>
+    Math.abs((ev.year + (ev.month - 1) / 12) - selectedDecY) < evTol);
+  if (evHere.length > 0) {
+    const evSec = document.createElement('div');
+    evSec.className = 'age-ev-sec';
+    evHere.forEach(ev => {
+      const row = document.createElement('div');
+      row.className = 'age-ev-item';
+      row.innerHTML =
+        '<span class="age-ev-icon">⚡</span>' +
+        `<span class="age-ev-name">${ev.name}</span>`;
+      evSec.appendChild(row);
+    });
+    list.appendChild(evSec);
+  }
+
   if (present.length === 0) {
-    list.innerHTML =
-      '<div style="padding:14px 10px;font-size:11px;color:var(--text-muted)">在籍選手なし</div>';
+    const empty = document.createElement('div');
+    empty.style.cssText = 'padding:14px 10px;font-size:11px;color:var(--text-muted)';
+    empty.textContent = '在籍選手なし';
+    list.appendChild(empty);
     return;
   }
 
@@ -672,7 +692,7 @@ function buildChart() {
       const px = ex - svgRect.left;
       const py = ey - svgRect.top;
 
-      // イベントラベルのヒット判定（ラベル帯の高さ内かつX一致の場合のみ無視）
+      // イベントラベルのヒット判定（ラベル自身の click ハンドラーが処理済みなので無視）
       if (py < EV_AREA_H + 8) {
         for (const hit of evHitItems) {
           if (px >= hit.sx - hit.w / 2 && px <= hit.sx + hit.w / 2) return;
@@ -681,6 +701,12 @@ function buildChart() {
 
       // 名前パネル領域はスキップ
       if (px < NAME_W) return;
+
+      // イベントマーカーの縦線の近くをクリックしたら、そのイベントの月にスナップ
+      const SNAP_PX = 10;
+      for (const hit of evHitItems) {
+        if (Math.abs(px - hit.sx) <= SNAP_PX) { selectDecY(hit.decY); return; }
+      }
 
       // クリック位置の小数年を計算してパネル選択
       const chartRelX = px - NAME_W;
@@ -1040,7 +1066,7 @@ function drawAxisPanel() {
     item.lane = lane;
   }
   evTotalLanes = Math.max(1, laneRights.length);
-  evHitItems = evItemsAll.map(item => ({ sx: item.sx, w: item.w }));
+  evHitItems = evItemsAll.map(item => ({ sx: item.sx, w: item.w, decY: item.decY }));
 
   /* スクロール量のクランプ */
   const evTotalH    = evTotalLanes * EV_LANE_H;
