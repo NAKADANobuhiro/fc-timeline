@@ -498,6 +498,10 @@ DATASETS.juventus = {
     { year: 2015, month:  6, name: 'CL決勝' },
     { year: 2017, month:  6, name: 'CL決勝' },
 
+    // ── カルチョポリ ──
+    { year: 2006, month:  7, name: 'セリエB降格' },
+    { year: 2007, month:  5, name: 'セリエA昇格' },
+
     // ── セリエA優勝（スクデット）──
     { year: 2012, month:  5, name: 'スクデット' },
     { year: 2013, month:  5, name: 'スクデット' },
