@@ -411,12 +411,11 @@ function renderAgePanel() {
     return toDecY(a.birth || '1970-01') - toDecY(b.birth || '1970-01');
   });
 
-  const present = allP.filter(p =>
-    p.stints.some(stint => {
-      const segs = segmentsFor(stint, p.loanOuts);
-      return segs.some(seg => seg.start <= selectedDecY && selectedDecY <= seg.end);
-    })
-  );
+  // 在籍中（レンタル移籍で不在の期間も「レンタル中」として含める）
+  const stintCovers = stint =>
+    toDecY(stint.start) <= selectedDecY &&
+    selectedDecY <= (stint.end ? toDecY(stint.end) : AXIS_END);
+  const present = allP.filter(p => p.stints.some(stintCovers));
 
   const list = document.getElementById('age-panel-list');
   list.innerHTML = '';
@@ -438,11 +437,14 @@ function renderAgePanel() {
       list.appendChild(head);
     }
     const color = ds.categories[p.position] || ds.categories[normalizePos(p.position)] || '#888';
-    const activeSint = p.stints.find(stint => {
-      const segs = segmentsFor(stint, p.loanOuts);
-      return segs.some(seg => seg.start <= selectedDecY && selectedDecY <= seg.end);
-    });
+    const activeSint = p.stints.find(stintCovers);
     const isLoanIn = activeSint ? !!activeSint.loan : false;
+    // その時点でレンタル移籍に出ているか
+    const loanOutNow = activeSint
+      ? p.loanOuts.find(lo =>
+          toDecY(lo.start) <= selectedDecY &&
+          selectedDecY <= (lo.end ? toDecY(lo.end) : AXIS_END))
+      : null;
     const numPart  = activeSint && activeSint.number != null
       ? ` <span class="age-num">(${activeSint.number})</span>` : '';
 
@@ -456,7 +458,8 @@ function renderAgePanel() {
     item.innerHTML =
       `<span class="age-dot" style="background:${color}"></span>` +
       `<span class="age-name">${p.name}${numPart}</span>` +
-      (isLoanIn ? `<span class="age-loan">L</span>` : '') +
+      (loanOutNow ? `<span class="age-loan" title="${loanOutNow.team} へレンタル移籍中">↗</span>`
+                  : isLoanIn ? `<span class="age-loan">L</span>` : '') +
       (age !== null ? `<span class="age-age">${age}</span>` : '');
 
     // ホバーツールチップ
@@ -524,11 +527,16 @@ function buildChart() {
       const MIN_SOLID = 2 / 12;  // 2ヶ月未満の solid は無視
       return p.stints.some(stint => {
         const segs = segmentsFor(stint, p.loanOuts);
-        return segs.some(seg => {
+        const hasSolid = segs.some(seg => {
           const visStart = Math.max(seg.start, viewStart);
           const visEnd   = Math.min(seg.end,   AXIS_END);
           return visEnd - visStart >= MIN_SOLID;
         });
+        if (hasSolid) return true;
+        // 全期間レンタル移籍中でも、在籍期間が表示範囲にあれば枠線バーで表示する
+        const stS = Math.max(toDecY(stint.start), viewStart);
+        const stE = Math.min(stint.end ? toDecY(stint.end) : AXIS_END, AXIS_END);
+        return stE - stS >= MIN_SOLID;
       });
     })
     .slice()
@@ -850,12 +858,37 @@ function drawBars(cg, ds) {
         const gx1 = xScale(Math.max(loS, stintS, AXIS_START));
         const gx2 = xScale(Math.min(loE, stintE, AXIS_END));
         if (gx2 <= gx1) return;
-        cg.append('line')
-          .attr('x1', gx1).attr('y1', cy)
-          .attr('x2', gx2).attr('y2', cy)
+        const OH = Math.max(5, Math.round(BAR_H * 0.62));
+        const ghost = cg.append('rect')
+          .attr('x', gx1).attr('y', cy - OH / 2)
+          .attr('width', gx2 - gx1).attr('height', OH)
+          .attr('fill', 'none')
           .attr('stroke', color).attr('stroke-width', 1)
-          .attr('stroke-dasharray', '3,3').attr('opacity', 0.35)
-          .attr('pointer-events', 'none');
+          .attr('stroke-dasharray', '3,2')
+          .attr('rx', 2).attr('opacity', 0.5)
+          .attr('cursor', 'pointer');
+        ghost
+          .on('mouseover', function(event) {
+            d3.select(this).attr('opacity', 0.95);
+            const endStr = stint.end ? fmtYM(stint.end) : '現在';
+            const loEndStr = lo.end ? fmtYM(lo.end) : '現在';
+            let html =
+              `<div class="tt-name">${p.name}</div>` +
+              `<div class="tt-nat">${p.national || ''}</div>` +
+              `<div class="tt-period">在籍: ${fmtYM(stint.start)} 〜 ${endStr}</div>` +
+              `<div class="tt-loanout">↗ レンタル移籍中: ${lo.team}</div>` +
+              `<div class="tt-loanout">${fmtYM(lo.start)}〜${loEndStr}</div>`;
+            if (p.birth) html += `<div class="tt-birth">生年月: ${fmtYM(p.birth)}</div>`;
+            ttEl.innerHTML = html;
+            ttEl.classList.add('show');
+          })
+          .on('mousemove', event => {
+            posTooltip(event.clientX, event.clientY);
+          })
+          .on('mouseout', function() {
+            d3.select(this).attr('opacity', 0.5);
+            ttEl.classList.remove('show');
+          });
       });
 
     }); // stints.forEach
