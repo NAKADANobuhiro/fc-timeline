@@ -16,7 +16,7 @@ const TICK_Y      = SEASON_Y + SEASON_H;        // = 42  月ティック帯 上�
 const TICK_H      = HDR_H - TICK_Y;            // = 14  月ティック帯 高さ
 
 const AXIS_START  = 2000;                       // 2000年1月
-const AXIS_END    = 2026 + 5 / 12;             // 2026年6月
+const AXIS_END    = 2027 + 5 / 12;             // 2027年6月
 
 // カテゴリ表示順（上から並ぶ順序）
 const CAT_ORDER   = ['監督', 'GK', 'DF', 'MF', 'FW'];

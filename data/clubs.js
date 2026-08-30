@@ -29,7 +29,7 @@ DATASETS.arsenal = {
   league:       "プレミアリーグ",
   team:         "アーセナルFC",
   teamAliases:  ["アーセナル", "Arsenal", "Arsenal FC"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -47,6 +47,7 @@ DATASETS.arsenal = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── プレミアリーグ優勝 ──
     { year: 2002, month:  5, name: 'PL優勝' },
@@ -59,6 +60,10 @@ DATASETS.arsenal = {
     { year: 2015, month:  5, name: 'FA杯優勝' },
     { year: 2017, month:  5, name: 'FA杯優勝' },
     { year: 2020, month:  8, name: 'FA杯優勝' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2026, month:  5, name: 'PL優勝' },
+    { year: 2026, month:  5, name: 'CL決勝' },
   ],
 };
 
@@ -68,7 +73,7 @@ DATASETS.chelsea = {
   league:       "プレミアリーグ",
   team:         "チェルシーFC",
   teamAliases:  ["チェルシー", "Chelsea", "Chelsea FC"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -86,6 +91,7 @@ DATASETS.chelsea = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2008, month:  5, name: 'CL決勝' },
@@ -98,6 +104,9 @@ DATASETS.chelsea = {
     { year: 2010, month:  5, name: 'PL優勝' },
     { year: 2015, month:  5, name: 'PL優勝' },
     { year: 2017, month:  5, name: 'PL優勝' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'UECL優勝' },
   ],
 };
 
@@ -107,7 +116,7 @@ DATASETS.tottenham = {
   league:       "プレミアリーグ",
   team:         "トッテナム・ホットスパーFC",
   teamAliases:  ["トッテナム・ホットスパー", "トッテナム", "Tottenham", "Tottenham Hotspur", "Spurs"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -125,12 +134,16 @@ DATASETS.tottenham = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2019, month:  6, name: 'CL決勝' },
 
     // ── リーグカップ優勝 ──
     { year: 2008, month:  2, name: 'リーグ杯優勝' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'EL優勝' },
   ],
 };
 
@@ -144,7 +157,7 @@ DATASETS.barcelona = {
   league:       "リーガ・エスパニョーラ",
   team:         "FCバルセロナ",
   teamAliases:  ["バルセロナ", "Barcelona", "FC Barcelona"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -162,6 +175,7 @@ DATASETS.barcelona = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2006, month:  5, name: 'CL決勝' },
@@ -181,6 +195,10 @@ DATASETS.barcelona = {
     { year: 2018, month:  5, name: 'リーガ優勝' },
     { year: 2019, month:  5, name: 'リーガ優勝' },
     { year: 2023, month:  5, name: 'リーガ優勝' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'リーガ優勝' },
+    { year: 2026, month:  5, name: 'リーガ優勝' },
   ],
 };
 
@@ -190,7 +208,7 @@ DATASETS.real_madrid = {
   league:       "リーガ・エスパニョーラ",
   team:         "レアル・マドリードCF",
   teamAliases:  ["レアル・マドリード", "レアルマドリード", "Real Madrid"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -208,6 +226,7 @@ DATASETS.real_madrid = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2002, month:  5, name: 'CL決勝' },
@@ -241,7 +260,7 @@ DATASETS.bayern = {
   league:       "ブンデスリーガ",
   team:         "FCバイエルン・ミュンヘン",
   teamAliases:  ["バイエルン", "バイエルン・ミュンヘン", "Bayern", "Bayern Munich", "FC Bayern"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -259,6 +278,7 @@ DATASETS.bayern = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2010, month:  5, name: 'CL決勝' },
@@ -284,6 +304,10 @@ DATASETS.bayern = {
     { year: 2021, month:  4, name: 'BL優勝' },
     { year: 2022, month:  4, name: 'BL優勝' },
     { year: 2023, month:  4, name: 'BL優勝' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'BL優勝' },
+    { year: 2026, month:  5, name: 'BL優勝' },
   ],
 };
 
@@ -293,7 +317,7 @@ DATASETS.dortmund = {
   league:       "ブンデスリーガ",
   team:         "ボルシア・ドルトムント",
   teamAliases:  ["ドルトムント", "BVB", "Borussia Dortmund"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -311,6 +335,7 @@ DATASETS.dortmund = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2013, month:  5, name: 'CL決勝' },
@@ -333,7 +358,7 @@ DATASETS.ac_milan = {
   league:       "セリエA",
   team:         "ACミラン",
   teamAliases:  ["ミラン", "AC Milan", "Milan"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -351,6 +376,7 @@ DATASETS.ac_milan = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2003, month:  5, name: 'CL決勝' },
@@ -370,7 +396,7 @@ DATASETS.atalanta = {
   league:       "セリエA",
   team:         "アタランタBC",
   teamAliases:  ["アタランタ", "Atalanta", "Atalanta BC"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -388,6 +414,7 @@ DATASETS.atalanta = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── EL優勝 ──
     { year: 2024, month:  5, name: 'EL優勝' },
@@ -400,7 +427,7 @@ DATASETS.inter = {
   league:       "セリエA",
   team:         "インテルナツィオナーレ・ミラノ",
   teamAliases:  ["インテル", "インテルナツィオナーレ", "インテル・ミラノ", "Inter Milan"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -418,6 +445,7 @@ DATASETS.inter = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2010, month:  5, name: 'CL決勝' },
@@ -431,6 +459,11 @@ DATASETS.inter = {
     { year: 2010, month:  5, name: 'スクデット' },
     { year: 2021, month:  5, name: 'スクデット' },
     { year: 2024, month:  5, name: 'スクデット' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'CL決勝' },
+    { year: 2026, month:  5, name: 'スクデット' },
+    { year: 2026, month:  5, name: 'コッパ優勝' },
   ],
 };
 
@@ -440,7 +473,7 @@ DATASETS.juventus = {
   league:       "セリエA",
   team:         "ユヴェントスFC",
   teamAliases:  ["ユヴェントス", "ユベントス", "Juventus"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -458,6 +491,7 @@ DATASETS.juventus = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2003, month:  5, name: 'CL決勝' },
@@ -483,7 +517,7 @@ DATASETS.napoli = {
   league:       "セリエA",
   team:         "SSCナポリ",
   teamAliases:  ["ナポリ", "Napoli", "SSC Napoli"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -501,9 +535,13 @@ DATASETS.napoli = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── セリエA優勝（スクデット）──
     { year: 2023, month:  5, name: 'スクデット' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'スクデット' },
   ],
 };
 
@@ -513,7 +551,7 @@ DATASETS.fiorentina = {
   league:       "セリエA",
   team:         "ACFフィオレンティーナ",
   teamAliases:  ["フィオレンティーナ", "Fiorentina"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -531,6 +569,7 @@ DATASETS.fiorentina = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── セリエA準優勝 ──
     { year: 2008, month:  5, name: 'セリエA2位' },
@@ -546,7 +585,7 @@ DATASETS.roma = {
   league:       "セリエA",
   team:         "ASローマ",
   teamAliases:  ["ローマ", "AS Roma", "Roma"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -564,6 +603,7 @@ DATASETS.roma = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLセミファイナル ──
     { year: 2018, month:  4, name: 'CLベスト4' },
@@ -586,7 +626,7 @@ DATASETS.psg = {
   league:       "リーグ・アン",
   team:         "パリ・サンジェルマン",
   teamAliases:  ["パリサンジェルマン", "PSG", "Paris Saint-Germain"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -604,6 +644,7 @@ DATASETS.psg = {
     { year: 2014, month:  7, name: 'ブラジルW杯' },
     { year: 2018, month:  7, name: 'ロシアW杯' },
     { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
 
     // ── CLファイナル ──
     { year: 2020, month:  8, name: 'CL決勝' }, // コロナ禍による変則日程
@@ -619,6 +660,12 @@ DATASETS.psg = {
     { year: 2022, month:  4, name: 'リーグ優勝' },
     { year: 2023, month:  5, name: 'リーグ優勝' },
     { year: 2024, month:  4, name: 'リーグ優勝' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month:  5, name: 'リーグ優勝' },
+    { year: 2025, month:  5, name: 'CL決勝' },
+    { year: 2026, month:  5, name: 'リーグ優勝' },
+    { year: 2026, month:  5, name: 'CL決勝' },
   ],
 };
 
@@ -632,7 +679,7 @@ DATASETS.kawasaki = {
   league:       "Jリーグ",
   team:         "川崎フロンターレ",
   teamAliases:  ["川崎", "Kawasaki Frontale"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -658,7 +705,7 @@ DATASETS.machida = {
   league:       "Jリーグ",
   team:         "FC町田ゼルビア",
   teamAliases:  ["町田ゼルビア", "町田"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
@@ -671,6 +718,9 @@ DATASETS.machida = {
   events: [
     // ── J1昇格 ──
     { year: 2024, month:  1, name: 'J1昇格' },
+
+    // ── 2024/25・2025/26 ──
+    { year: 2025, month: 11, name: '天皇杯優勝' },
   ],
 };
 
@@ -680,7 +730,7 @@ DATASETS.fctokyo = {
   league:       "Jリーグ",
   team:         "FC東京",
   teamAliases:  ["東京", "FC Tokyo"],
-  period:       "2000/01〜2025/26",
+  period:       "2000/01〜2026/27",
 
   categories: {
     '監督': '#c0392b',
