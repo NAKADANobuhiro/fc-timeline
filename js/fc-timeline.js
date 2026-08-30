@@ -6,14 +6,14 @@
 const NAME_W      = 160;   // 名前パネル幅
 const ROW_H       = 28;    // 1行の高さ
 const BAR_H       = 13;    // バーの高さ
-const HDR_H       = 56;    // ヘッダー高さ
-const EV_LANE_H   = 13;    // イベントラベル1レーン分の高さ
-const EV_MAX_LANES = 2;    // イベントレーン最大数
-const EV_AREA_H   = EV_MAX_LANES * EV_LANE_H;  // = 26
-const SEASON_Y    = EV_AREA_H;                  // = 26  シーズンラベル帯 上端
+const EV_LANE_H   = 15;    // イベントラベル1レーン分の高さ
+const EV_VISIBLE_LANES = 3;  // イベントエリアに同時表示するレーン数（超過分はスクロール）
+const EV_AREA_H   = EV_VISIBLE_LANES * EV_LANE_H;  // = 45  イベントエリア高さ
+const SEASON_Y    = EV_AREA_H;                  // = 45  シーズンラベル帯 上端
 const SEASON_H    = 16;                         // シーズンラベル帯 高さ
-const TICK_Y      = SEASON_Y + SEASON_H;        // = 42  月ティック帯 上端
-const TICK_H      = HDR_H - TICK_Y;            // = 14  月ティック帯 高さ
+const TICK_Y      = SEASON_Y + SEASON_H;        // = 61  月ティック帯 上端
+const TICK_H      = 14;                         //       月ティック帯 高さ
+const HDR_H       = TICK_Y + TICK_H;            // = 75  ヘッダー高さ
 
 const AXIS_START  = 2000;                       // 2000年1月
 const AXIS_END    = 2027 + 5 / 12;             // 2027年6月
@@ -263,6 +263,8 @@ let curTotalDataH = 0;
 let curChartW   = 0;
 let svgEl, contentG, namesG, axisG, zoomBehavior, xScale;
 let evHitItems  = [];
+let evScrollY   = 0;      // イベントエリアの縦スクロール量（px）
+let evTotalLanes = 1;     // 現在のイベントレーン総数（drawAxisPanel が設定）
 let selectedDecY = null;  // 選択中の小数年（null = 未選択）
 
 /* ===== VIEW RANGE ===== */
@@ -485,6 +487,7 @@ function loadDataset(key) {
   document.title = ds.name + ' / fc-timeline';
   curT     = d3.zoomIdentity;
   kXExtra  = getViewKXExtra();
+  evScrollY = 0;
   visibleCats = {};
   renderFilters(ds);
   renderLegend(ds);
@@ -697,6 +700,18 @@ function buildChart() {
       svgEl.call(zoomBehavior.scaleBy, factor);
       return;
     }
+    /* イベントエリア上のホイール → イベントレーンを縦スクロール */
+    const svgRect = svgEl.node().getBoundingClientRect();
+    const mouseY  = event.clientY - svgRect.top;
+    if (mouseY < EV_AREA_H && !event.shiftKey) {
+      const d = event.deltaMode === 1 ? event.deltaY * EV_LANE_H : event.deltaY;
+      const maxScroll = Math.max(0, evTotalLanes * EV_LANE_H - EV_AREA_H);
+      const prev = evScrollY;
+      evScrollY = Math.max(0, Math.min(evScrollY + d, maxScroll));
+      if (evScrollY !== prev) redrawFixed();
+      return;
+    }
+
     const delta  = event.deltaMode === 1 ? event.deltaY * ROW_H : event.deltaY;
     const hDelta = event.deltaMode === 1 ? event.deltaX * ROW_H : event.deltaX;
     const dx = event.shiftKey ? -delta : -hDelta;
@@ -710,6 +725,25 @@ function buildChart() {
       newT = d3.zoomIdentity.scale(newT.k).translate(cx / newT.k, cy / newT.k);
     svgEl.call(zoomBehavior.transform, newT);
   }, { passive: false });
+
+  /* ── タッチ → イベントエリアスクロール（モバイル） ── */
+  let _evTouchY = null;
+  svgEl.on('touchstart.evscroll', function(event) {
+    const t0 = event.touches[0];
+    const r  = svgEl.node().getBoundingClientRect();
+    _evTouchY = (t0.clientY - r.top < EV_AREA_H) ? t0.clientY : null;
+  }, { passive: true });
+
+  svgEl.on('touchmove.evscroll', function(event) {
+    if (_evTouchY === null) return;
+    const t0 = event.touches[0];
+    const dy = _evTouchY - t0.clientY;
+    _evTouchY = t0.clientY;
+    const maxScroll = Math.max(0, evTotalLanes * EV_LANE_H - EV_AREA_H);
+    const prev = evScrollY;
+    evScrollY = Math.max(0, Math.min(evScrollY + dy, maxScroll));
+    if (evScrollY !== prev) redrawFixed();
+  }, { passive: true });
 }
 
 /* ── applyContentTransform ── */
@@ -996,26 +1030,29 @@ function drawAxisPanel() {
   });
   evItemsAll.sort((a, b) => a.sx - b.sx);
 
-  /* 貪欲レーン割り当て（最大 EV_MAX_LANES レーン） */
+  /* 貪欲レーン割り当て（レーン数は無制限。EV_VISIBLE_LANES を超えた分はスクロールで見る） */
   const laneRights = [];
   for (const item of evItemsAll) {
     const leftEdge = item.sx - item.w / 2 - 4;
     let lane = laneRights.findIndex(r => leftEdge >= r);
-    if (lane === -1) {
-      lane = laneRights.length < EV_MAX_LANES ? laneRights.length : EV_MAX_LANES - 1;
-    }
-    if (laneRights[lane] === undefined) laneRights[lane] = 0;
+    if (lane === -1) { lane = laneRights.length; laneRights.push(0); }
     laneRights[lane] = item.sx + item.w / 2;
     item.lane = lane;
   }
+  evTotalLanes = Math.max(1, laneRights.length);
   evHitItems = evItemsAll.map(item => ({ sx: item.sx, w: item.w }));
+
+  /* スクロール量のクランプ */
+  const evTotalH    = evTotalLanes * EV_LANE_H;
+  const evMaxScroll = Math.max(0, evTotalH - EV_AREA_H);
+  evScrollY = Math.max(0, Math.min(evScrollY, evMaxScroll));
 
   const evG = axisG.append('g').attr('clip-path', 'url(#clip-ev)');
 
   evItemsAll
     .filter(item => item.sx + item.w / 2 >= NAME_W && item.sx - item.w / 2 <= W)
     .forEach(item => {
-      const centerY = (item.lane + 0.5) * EV_LANE_H;
+      const centerY = (item.lane + 0.5) * EV_LANE_H - evScrollY;
       // コネクタ線
       if (centerY + evFontSize * 0.6 < EV_AREA_H) {
         evG.append('line')
@@ -1039,6 +1076,21 @@ function drawAxisPanel() {
         .on('click', (event) => { event.stopPropagation(); selectDecY(item.decY); })
         .text(item.text);
     });
+
+  /* ── イベントエリアのミニスクロールバー（右端） ── */
+  if (evMaxScroll > 0) {
+    const sbW = 3, sbX = W - sbW - 2;
+    const thumbH   = Math.max(14, EV_AREA_H * (EV_AREA_H / evTotalH));
+    const thumbTop = (evScrollY / evTotalH) * EV_AREA_H;
+    axisG.append('rect')
+      .attr('x', sbX).attr('y', 0)
+      .attr('width', sbW).attr('height', EV_AREA_H)
+      .attr('fill', cv('--border')).attr('rx', sbW / 2).attr('opacity', 0.5);
+    axisG.append('rect')
+      .attr('x', sbX).attr('y', thumbTop)
+      .attr('width', sbW).attr('height', thumbH)
+      .attr('fill', cv('--text-muted')).attr('rx', sbW / 2).attr('opacity', 0.8);
+  }
 
   /* ── シーズン区切り・ラベル ── */
   // 1px あたりの年数
