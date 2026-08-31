@@ -547,7 +547,7 @@ function buildChart() {
     .filter(p => {
       // solid セグメントが表示範囲内に一定期間（2ヶ月以上）あれば表示
       const viewStart = viewMode === 'recent' ? VIEW_RECENT_START : AXIS_START;
-      const MIN_SOLID = 2 / 12;  // 2ヶ月未満の solid は無視
+      const MIN_SOLID = 2 / 12 - 1e-9;  // 2ヶ月未満の solid は無視（浮動小数誤差ぶん緩める）
       return p.stints.some(stint => {
         const segs = segmentsFor(stint, p.loanOuts);
         const hasSolid = segs.some(seg => {
