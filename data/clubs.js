@@ -147,6 +147,54 @@ DATASETS.tottenham = {
   ],
 };
 
+// マンチェスター・ユナイテッドFC
+DATASETS.man_utd = {
+  name:         "マンチェスター・ユナイテッドFC",
+  league:       "プレミアリーグ",
+  team:         "マンチェスター・ユナイテッドFC",
+  teamAliases:  ["マンチェスター・ユナイテッド", "マンチェスターユナイテッド", "マンチェスター・U", "マンU", "Manchester United", "Man Utd"],
+  period:       "2000/01〜2026/27",
+
+  categories: {
+    '監督': '#c0392b',
+    'FW':  '#e67e22',
+    'MF':  '#27ae60',
+    'DF':  '#2471a3',
+    'GK':  '#6c3483',
+  },
+
+  events: [
+    // ── W杯 ──
+    { year: 2002, month:  6, name: '日韓W杯' },
+    { year: 2006, month:  7, name: 'ドイツW杯' },
+    { year: 2010, month:  7, name: 'S.アフリカW杯' },
+    { year: 2014, month:  7, name: 'ブラジルW杯' },
+    { year: 2018, month:  7, name: 'ロシアW杯' },
+    { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
+
+    // ── CLファイナル ──
+    { year: 2008, month:  5, name: 'CL優勝' },
+    { year: 2009, month:  5, name: 'CL決勝' },
+    { year: 2011, month:  5, name: 'CL決勝' },
+
+    // ── プレミアリーグ優勝 ──
+    { year: 2001, month:  4, name: 'PL優勝' },
+    { year: 2003, month:  5, name: 'PL優勝' },
+    { year: 2007, month:  5, name: 'PL優勝' },
+    { year: 2008, month:  5, name: 'PL優勝' },
+    { year: 2009, month:  5, name: 'PL優勝' },
+    { year: 2011, month:  5, name: 'PL優勝' },
+    { year: 2013, month:  4, name: 'PL優勝' },
+
+    // ── FA杯・EL ──
+    { year: 2004, month:  5, name: 'FA杯優勝' },
+    { year: 2016, month:  5, name: 'FA杯優勝' },
+    { year: 2017, month:  5, name: 'EL優勝' },
+    { year: 2024, month:  5, name: 'FA杯優勝' },
+  ],
+};
+
 // ────────────────────────────────────────────────
 // リーガ・エスパニョーラ
 // ────────────────────────────────────────────────
@@ -345,6 +393,78 @@ DATASETS.dortmund = {
     { year: 2002, month:  4, name: 'BL優勝' },
     { year: 2011, month:  4, name: 'BL優勝' },
     { year: 2012, month:  3, name: 'BL優勝' },
+  ],
+};
+
+// シャルケ04
+DATASETS.schalke = {
+  name:         "シャルケ04",
+  league:       "ブンデスリーガ",
+  team:         "シャルケ04",
+  teamAliases:  ["シャルケ", "FCシャルケ04", "Schalke", "Schalke 04", "FC Schalke 04"],
+  period:       "2000/01〜2026/27",
+
+  categories: {
+    '監督': '#c0392b',
+    'FW':  '#e67e22',
+    'MF':  '#27ae60',
+    'DF':  '#2471a3',
+    'GK':  '#6c3483',
+  },
+
+  events: [
+    // ── W杯 ──
+    { year: 2002, month:  6, name: '日韓W杯' },
+    { year: 2006, month:  7, name: 'ドイツW杯' },
+    { year: 2010, month:  7, name: 'S.アフリカW杯' },
+    { year: 2014, month:  7, name: 'ブラジルW杯' },
+    { year: 2018, month:  7, name: 'ロシアW杯' },
+    { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
+
+    // ── DFBポカール優勝 ──
+    { year: 2001, month:  5, name: 'DFBポカール' },
+    { year: 2002, month:  5, name: 'DFBポカール' },
+    { year: 2011, month:  5, name: 'DFBポカール' },
+
+    // ── 昇降格 ──
+    { year: 2021, month:  5, name: '2部降格' },
+    { year: 2022, month:  5, name: '1部昇格' },
+    { year: 2023, month:  5, name: '2部降格' },
+    { year: 2026, month:  5, name: '1部昇格' },
+  ],
+};
+
+// 1.FSVマインツ05
+DATASETS.mainz = {
+  name:         "1.FSVマインツ05",
+  league:       "ブンデスリーガ",
+  team:         "1.FSVマインツ05",
+  teamAliases:  ["マインツ", "マインツ05", "1.FSV マインツ05", "Mainz", "Mainz 05", "1. FSV Mainz 05"],
+  period:       "2000/01〜2026/27",
+
+  categories: {
+    '監督': '#c0392b',
+    'FW':  '#e67e22',
+    'MF':  '#27ae60',
+    'DF':  '#2471a3',
+    'GK':  '#6c3483',
+  },
+
+  events: [
+    // ── W杯 ──
+    { year: 2002, month:  6, name: '日韓W杯' },
+    { year: 2006, month:  7, name: 'ドイツW杯' },
+    { year: 2010, month:  7, name: 'S.アフリカW杯' },
+    { year: 2014, month:  7, name: 'ブラジルW杯' },
+    { year: 2018, month:  7, name: 'ロシアW杯' },
+    { year: 2022, month: 11, name: 'カタールW杯' },
+    { year: 2026, month:  7, name: '北中米W杯' },
+
+    // ── 昇降格 ──
+    { year: 2004, month:  5, name: '1部初昇格' },
+    { year: 2007, month:  5, name: '2部降格' },
+    { year: 2009, month:  5, name: '1部昇格' },
   ],
 };
 
